@@ -5,7 +5,8 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 defineProps({
     canResetPassword: {
@@ -20,6 +21,7 @@ const form = useForm({
     email: '',
     password: '',
     remember: false,
+    showPassword:false
 });
 
 const submit = () => {
@@ -31,64 +33,27 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Forgot your password?
-                </Link>
-
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
+        <Head title="Masuk" />
+        <v-card min-width="300" max-width="350" class="mx-auto">
+            <v-card-text>
+                <v-text-field prepend-icon="mdi-email" density='compact' label='Email' v-model='form.email' required
+                    variant="outlined" :error-messages="form.errors.email"/>
+                <v-text-field prepend-icon="mdi-lock" :append-inner-icon="form.showPassword?'mdi-eye-off':'mdi-eye'" density='compact' label='password'
+                    v-model='form.password' required variant="outlined" :type="form.showPassword?'text':'password'" 
+                    @click:append-inner="form.showPassword=!form.showPassword"
+                    :error-messages="form.errors.password"/>
+                <v-sheet class="ml-10">
+                    <v-checkbox hide-details density="compact" label="Ingat saya" v-model="form.remember" />
+                </v-sheet>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn variant="text" @click="router.get('/register')">Daftar</v-btn>
+                <v-spacer/>
+                <v-btn @click="form.post('/login')" color="success" variant="flat"
+                :disabled="form.processing" :loading="form.processing"
+                >Masuk</v-btn>
+            </v-card-actions>
+        </v-card>
     </GuestLayout>
 </template>

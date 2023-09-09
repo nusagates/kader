@@ -4,11 +4,12 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     name: '',
     email: '',
+    phone: '',
     password: '',
     password_confirmation: '',
 });
@@ -22,82 +23,32 @@ const submit = () => {
 
 <template>
     <GuestLayout>
+
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Already registered?
-                </Link>
-
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
+        <v-card min-width="300" max-width="350" class="mx-auto">
+            <v-card-text>
+                <v-text-field prepend-icon="mdi-account" density='compact' label='Nama Lengkap' v-model='form.name' required
+                    variant="outlined" :error-messages="form.errors.name" />
+                <v-text-field prepend-icon="mdi-email" density='compact' label='Email' v-model='form.email' required
+                    variant="outlined" :error-messages="form.errors.email" />
+                <v-text-field prepend-icon="mdi-phone" density='compact' label='Telpon' v-model='form.phone' required
+                    variant="outlined" :error-messages="form.errors.phone" />
+                <v-text-field prepend-icon="mdi-lock" :append-inner-icon="form.showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    density='compact' label='Sandi' v-model='form.password' required variant="outlined"
+                    :type="form.showPassword ? 'text' : 'password'" @click:append-inner="form.showPassword = !form.showPassword"
+                    :error-messages="form.errors.password" />
+                <v-text-field prepend-icon="mdi-lock" :append-inner-icon="form.showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+                    density='compact' label='Konfirmasi Sandi' v-model='form.password_confirmation' required variant="outlined"
+                    :type="form.showPassword ? 'text' : 'password'" @click:append-inner="form.showPassword = !form.showPassword"
+                    :error-messages="form.errors.password_confirmation" />
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer />
+                <v-btn size="small" variant="text" @click="router.get('/login')">Sudah punya akun?</v-btn>
+                <v-btn @click="form.post('/register')" color="success" variant="flat" :disabled="form.processing"
+                    :loading="form.processing">Daftar</v-btn>
+            </v-card-actions>
+        </v-card>
     </GuestLayout>
 </template>
