@@ -157,6 +157,7 @@ return [
     'date'                     => 'tanggal',
     'date_of_birth'            => 'tanggal lahir',
     'day'                      => 'hari',
+    'dob'                      => 'tanggal lahir',
     'deleted_at'               => 'dihapus pada',
     'description'              => 'deskripsi',
     'district'                 => 'daerah',
@@ -170,6 +171,7 @@ return [
     'hour'                     => 'jam',
     'image'                    => 'gambar',
     'last_name'                => 'nama belakang',
+    'legal_name'                => 'nama lengkap',
     'lesson'                   => 'pelajaran',
     'line_address_1'           => 'alamat baris 1',
     'line_address_2'           => 'alamat baris 2',
@@ -184,6 +186,7 @@ return [
     'password'                 => 'kata sandi',
     'password_confirmation'    => 'konfirmasi kata sandi',
     'phone'                    => 'telepon',
+    'pob'                    => 'tempat lahir',
     'photo'                    => 'foto',
     'postal_code'              => 'kode Pos',
     'price'                    => 'harga',
@@ -212,6 +215,7 @@ return [
     'updated_at'               => 'diperbarui pada',
     'username'                 => 'nama pengguna',
     'year'                     => 'tahun',
-    'management_id'            => 'Ranting Asal'
+    'management_id'            => 'Ranting Asal',
+    'postal'            => 'kelurahan'
   ],
 ];
