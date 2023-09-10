@@ -14,4 +14,13 @@ class Member extends Model
         'address' => 'array',
         'postal' => 'array',
     ];
+
+    public function children()
+    {
+        return $this->hasMany(Children::class);
+    }
+    public function organizations()
+    {
+        return $this->hasMany(Organization::class);
+    }
 }

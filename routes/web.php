@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ChildrenController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Member;
@@ -24,6 +26,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/dashboard', [NavigationController::class, 'dashboard'])->name('dashboard');
     Route::resource('user', UserController::class);
     Route::resource('member', MemberController::class);
+    Route::group(['prefix'=>'member/{member}'], function(){
+        Route::resource('children', ChildrenController::class);
+        Route::resource('organization', OrganizationController::class);
+    });
 });
 
 

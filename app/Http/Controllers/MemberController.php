@@ -81,6 +81,7 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
+        $member->load(['children','organizations']);
         return Inertia::render('Members/Show',['member'=>$member]);
     }
 

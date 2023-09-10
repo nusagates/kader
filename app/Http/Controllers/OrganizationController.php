@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Children;
 use App\Models\Member;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ChildrenController extends Controller
+class OrganizationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class ChildrenController extends Controller
      */
     public function create(Member $member)
     {
-        return Inertia::render('Children/Create', ['member' => $member]);
+        return Inertia::render('Organizations/Create', ['member' => $member]);
     }
 
     /**
@@ -31,16 +31,25 @@ class ChildrenController extends Controller
     public function store(Request $request, Member $member)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'title' => 'required',
         ]);
-        $member->children()->firstOrCreate(['name'=>$request->name],['dob'=>$request->dob,'education'=>$request->education]);
-        return redirect('/member/'.$member->id);
+        $member->organizations()->firstOrCreate(
+            ['name' => $request->name],
+            [
+                'level' => $request->level,
+                'title' => $request->title,
+                'started_at'=>$request->started_at,
+                'finished_at'=>$request->finished_at
+            ]
+        );
+        return redirect('/member/' . $member->id);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Children $children)
+    public function show(Organization $organization)
     {
         //
     }
@@ -48,7 +57,7 @@ class ChildrenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Children $children)
+    public function edit(Organization $organization)
     {
         //
     }
@@ -56,7 +65,7 @@ class ChildrenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Children $children)
+    public function update(Request $request, Organization $organization)
     {
         //
     }
@@ -64,7 +73,7 @@ class ChildrenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Children $children)
+    public function destroy(Organization $organization)
     {
         //
     }
