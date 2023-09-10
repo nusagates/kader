@@ -45,6 +45,7 @@
                             <td><v-chip @click="router.get('/member?filter=village&value=' + user.postal.village)">{{user.postal.village }}</v-chip></td>
                             <td>
                                 <v-icon @click="router.get(`/member/${user.id}/edit`)">mdi-square-edit-outline</v-icon>
+                                <v-icon @click="router.get(`/member/${user.id}`)">mdi-eye</v-icon>
                             </td>
                         </tr>
                     </tbody>
