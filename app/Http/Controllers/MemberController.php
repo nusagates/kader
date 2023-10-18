@@ -27,6 +27,8 @@ class MemberController extends Controller
         if ($request->filled('filter') && $request->filled('value')) {
             if($request->filter=='village'){
                 $members->where('postal->village', $request->value);
+            }else if($request->filter=='dob'){
+                $members->whereYear($request->filter, $request->value);
             }else{
                 $members->where($request->filter, $request->value);
             }
@@ -134,6 +136,7 @@ class MemberController extends Controller
             case 'education': return 'Pendidikan';
             case 'job': return 'Pekerjaan';
             case 'village': return 'Kelurahan';
+            case 'dob': return 'Tahun Lahir';
         }
     }
 }

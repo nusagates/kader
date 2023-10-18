@@ -28,7 +28,7 @@
                         <tr>
                             <th>Nama</th>
                             <th>Telpon</th>
-                            <th>Email</th>
+                            <th>Tgl. Lahir</th>
                             <th>Pendidikan</th>
                             <th>Pekerjaan</th>
                             <th>Kelurahan</th>
@@ -39,10 +39,10 @@
                         <tr v-for="user of members.data">
                             <td v-text="user.legal_name" />
                             <td v-text="user.phone" />
-                            <td v-text="user.email" />
+                            <td><v-chip @click="router.get('/member?filter=dob&value=' + user.dob.split('-')[0])">{{user.dob }}</v-chip></td>
                             <td><v-chip @click="router.get('/member?filter=education&value=' + user.education)">{{user.education }}</v-chip></td>
                             <td><v-chip @click="router.get('/member?filter=job&value=' + user.job)">{{user.job }}</v-chip></td>
-                            <td><v-chip @click="router.get('/member?filter=village&value=' + user.postal.village)">{{user.postal.village }}</v-chip></td>
+                            <td><v-chip v-if="user.postal!==null" @click="router.get('/member?filter=village&value=' + user.postal?.village)">{{user.postal?.village }}</v-chip></td>
                             <td>
                                 <v-icon @click="router.get(`/member/${user.id}/edit`)">mdi-square-edit-outline</v-icon>
                                 <v-icon @click="router.get(`/member/${user.id}`)">mdi-eye</v-icon>

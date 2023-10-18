@@ -2,7 +2,7 @@
     <AuthenticatedLayout>
 
         <Head title="Data Kader" />
-        <v-card :title="'Data ' + member.legal_name">
+        <v-card :title="member.legal_name">
             <v-card-text>
                 <v-row>
                     <v-col cols="12" md="6">
@@ -47,7 +47,7 @@
                             </tr>
                             <tr>
                                 <td>Pendapatan</td>
-                                <td v-text="member.income" />
+                                <td><NumberFormat :number="member.income" type="rupiah"></NumberFormat></td>
                             </tr>
                             <tr>
                                 <td>Golongan Darah</td>
@@ -133,6 +133,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import DateFormat from '@/Components/DateFormat.vue';
 import { useForm, Head, router } from '@inertiajs/vue3';
+import NumberFormat from '@/Components/NumberFormat.vue';
 let form = useForm({
     id: null,
     nik: '',
