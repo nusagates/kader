@@ -7,7 +7,9 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import {ref} from "vue";
 
+const enableRegister = ref(false)
 defineProps({
     canResetPassword: {
         type: Boolean,
@@ -40,7 +42,7 @@ const submit = () => {
                 <v-text-field prepend-icon="mdi-email" density='compact' label='Email' v-model='form.email' required
                     variant="outlined" :error-messages="form.errors.email"/>
                 <v-text-field prepend-icon="mdi-lock" :append-inner-icon="form.showPassword?'mdi-eye-off':'mdi-eye'" density='compact' label='password'
-                    v-model='form.password' required variant="outlined" :type="form.showPassword?'text':'password'" 
+                    v-model='form.password' required variant="outlined" :type="form.showPassword?'text':'password'"
                     @click:append-inner="form.showPassword=!form.showPassword"
                     :error-messages="form.errors.password"/>
                 <v-sheet class="ml-10">
@@ -48,7 +50,7 @@ const submit = () => {
                 </v-sheet>
             </v-card-text>
             <v-card-actions>
-                <v-btn variant="text" @click="router.get('/register')">Daftar</v-btn>
+                <v-btn v-if="enableRegister" variant="text" @click="router.get('/register')">Daftar</v-btn>
                 <v-spacer/>
                 <v-btn @click="form.post('/login')" color="success" variant="flat"
                 :disabled="form.processing" :loading="form.processing"
